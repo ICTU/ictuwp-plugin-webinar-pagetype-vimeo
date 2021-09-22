@@ -1,0 +1,17 @@
+{
+  "name": "ictu/ictuwp-plugin-webinar-pagetype-vimeo",
+  "type": "wordpress-plugin",
+  "description": "Voegt een paginatemplate toe waarmee je Vimeo-webinars op je website kunt tonen.",
+  "license": "GPL-3.0",
+  "homepage": "https://www.gebruikercentraal.nl",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Paul van Buuren",
+      "email": "paul@wbvb.nl",
+      "homepage": "https://wbvb.nl"
+    }
+  ],
+  "require": {
+  }
+}
