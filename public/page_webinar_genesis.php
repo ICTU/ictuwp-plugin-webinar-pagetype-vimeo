@@ -17,7 +17,7 @@ function gc_append_vimeo_scripts() {
 		$vimeourl = get_field( 'vimeo_url', $post->ID );
 
 		if ( $vimeourl ):
-			// if a vimeo URL is added, append the embed scripts
+			// if a Vimeo webinar URL is added, append the embed scripts
 			wp_enqueue_script( 'vimeo-scripts', 'https://player.vimeo.com/api/player.js', '', '', true );
 
 		endif;
