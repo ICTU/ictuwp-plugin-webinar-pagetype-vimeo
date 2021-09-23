@@ -51,7 +51,6 @@ function gc_do_vimeo_embed() {
 
 		if ( $vimeo_id ) {
 			echo '<p><a href="' . $vimeourl . '">' . _x( 'Link naar vimeo', 'gebruikercentraal' ) . '</a></p>';
-
 			echo '<div style="padding:56.25% 0 0 0;position:relative;border:0.2rem solid #6E9CA5">';
 			echo '<iframe src="https://vimeo.com/event/' . $vimeo_id . '/embed" ';
 			echo 'frameborder="0" ';

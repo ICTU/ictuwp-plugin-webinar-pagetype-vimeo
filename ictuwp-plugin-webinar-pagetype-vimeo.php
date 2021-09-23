@@ -24,7 +24,10 @@ if ( ! defined( 'WPINC' ) ) {
 //========================================================================================================
 // naam van paginatemplate
 if ( ! defined( 'ICTUWP_VIMEO_EMBED_TEMPLATE' ) ) {
-	define( 'ICTUWP_VIMEO_EMBED_TEMPLATE', 'page_webinar_genesis.php' );
+	define( 'ICTUWP_VIMEO_EMBED_TEMPLATE', 'page_webinar.php' );
+}
+if ( ! defined( 'ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS' ) ) {
+	define( 'ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS', 'page_webinar_genesis.php' );
 }
 
 // load translations
@@ -37,7 +40,6 @@ add_filter( 'theme_page_templates', 'ictuwp_vimeoembed_add_page_template' );
 add_filter( 'template_include', 'ictuwp_vimeoembed_use_page_template' );
 
 
-
 //========================================================================================================
 
 /**
@@ -47,7 +49,8 @@ add_filter( 'template_include', 'ictuwp_vimeoembed_use_page_template' );
  */
 function ictuwp_vimeoembed_add_page_template( $post_templates ) {
 
-	$post_templates[ ICTUWP_VIMEO_EMBED_TEMPLATE ] = _x( 'Webinar embed vimeo', "naam template", 'ictuwp-plugin-webinar' );
+	$post_templates[ ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS ] = _x( 'Webinar embed vimeo (2016)', "naam template", 'ictuwp-plugin-webinar' );
+	$post_templates[ ICTUWP_VIMEO_EMBED_TEMPLATE ]         = _x( 'Webinar embed vimeo (2020)', "naam template", 'ictuwp-plugin-webinar' );
 
 	return $post_templates;
 
@@ -80,10 +83,9 @@ function ictuwp_vimeoembed_load_plugin_textdomain() {
 function ictuwp_vimeoembed_use_page_template( $page_template ) {
 
 	global $post;
-	$page_template = get_post_meta( get_the_id(), '_wp_page_template', true );
+	$checktemplate = get_post_meta( get_the_id(), '_wp_page_template', true );
 
-	//
-	if ( ICTUWP_VIMEO_EMBED_TEMPLATE == $page_template ) {
+	if ( ICTUWP_VIMEO_EMBED_TEMPLATE == $checktemplate ) {
 
 		// TODO check in bouwen of Genesis actief of niet
 		// use page template from plugin
@@ -125,7 +127,7 @@ function ictuwp_vimeoembed_acf_json_save_point( $path ) {
 
 }
 
-add_filter('acf/settings/save_json', 'ictuwp_vimeoembed_acf_json_save_point');
+add_filter( 'acf/settings/save_json', 'ictuwp_vimeoembed_acf_json_save_point' );
 
 //========================================================================================================
 
