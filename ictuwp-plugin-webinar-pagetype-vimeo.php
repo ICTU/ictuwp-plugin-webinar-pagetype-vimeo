@@ -185,9 +185,14 @@ function ictuwp_vimeoembed_do_embed() {
 
 	global $post;
 
+	echo 'Ahem. Is hier iemand?';
+
 	// get the ACF field value
 	$vimeo_embed = get_field( 'vimeo_embed', $post->ID );
 	$chat_embed  = get_field( 'chat_embed', $post->ID );
+
+	echo '$vimeo_embed is : ' . esc_html( $vimeo_embed ) . '<br>';
+
 
 	if ( $vimeo_embed ):
 		// for example:https://vimeo.com/live/611413510/embed
