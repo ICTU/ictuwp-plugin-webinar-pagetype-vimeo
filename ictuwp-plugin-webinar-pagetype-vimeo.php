@@ -33,7 +33,7 @@ if ( ! defined( 'ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS' ) ) {
 	define( 'ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS', 'page_webinar_genesis.php' );
 }
 if ( ! defined( 'ICTUWP_VIMEO_EMBED_VERSION' ) ) {
-	define( 'ICTUWP_VIMEO_EMBED_VERSION', '1.0.0.g' );
+	define( 'ICTUWP_VIMEO_EMBED_VERSION', '1.0.0' );
 }
 
 // load translations
@@ -93,9 +93,13 @@ function ictuwp_vimeoembed_use_page_template( $page_template ) {
 
 	if ( ICTUWP_VIMEO_EMBED_TEMPLATE == $checktemplate ) {
 
-		// TODO check in bouwen of Genesis actief of niet
 		// use page template from plugin
-		$page_template = dirname( __FILE__ ) . '/public/page_webinar_genesis.php';
+		$page_template = dirname( __FILE__ ) . '/public/' . ICTUWP_VIMEO_EMBED_TEMPLATE;
+
+	}elseif ( ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS == $checktemplate ) {
+
+		// use page template from plugin
+		$page_template = dirname( __FILE__ ) . '/public/' . ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS;
 
 	}
 
@@ -157,7 +161,7 @@ function ictuwp_vimeoembed_append_vimeo_scripts() {
 
 	if ( ! is_admin() && $post ) {
 
-		$vimeo_embed = get_field( 'vimeo_url', $post->ID );
+		$vimeo_embed = get_field( 'vimeo_embed', $post->ID );
 
 		if ( $vimeo_embed ):
 			// if a Vimeo webinar URL is added, append the embed scripts
@@ -185,24 +189,13 @@ function ictuwp_vimeoembed_do_embed() {
 
 	global $post;
 
-	echo 'Ahem. Is hier iemand?';
-
 	// get the ACF field value
 	$vimeo_embed = get_field( 'vimeo_embed', $post->ID );
 	$chat_embed  = get_field( 'chat_embed', $post->ID );
 
-	echo '$vimeo_embed is : ' . esc_html( $vimeo_embed ) . '<br>';
-
-
 	if ( $vimeo_embed ):
-		// for example:https://vimeo.com/live/611413510/embed
 		$vimeo_id       = 0;
 		$webinarpadding = '56.25%';
-
-//		echo '<pre>';
-//		var_dump( $array_vimeo );
-//		echo '</pre>';
-
 		$videoparameters = array(
 			'badge'     => '0',
 			'autopause' => '0',
