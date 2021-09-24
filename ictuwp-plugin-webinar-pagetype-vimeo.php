@@ -21,6 +21,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+// in dit bestand staan de veld-definities voor de ACF-velden
+require plugin_dir_path( __FILE__ ) . 'includes/acf-definitions.php';
+
 //========================================================================================================
 // naam van paginatemplate
 if ( ! defined( 'ICTUWP_VIMEO_EMBED_TEMPLATE' ) ) {
@@ -28,6 +31,9 @@ if ( ! defined( 'ICTUWP_VIMEO_EMBED_TEMPLATE' ) ) {
 }
 if ( ! defined( 'ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS' ) ) {
 	define( 'ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS', 'page_webinar_genesis.php' );
+}
+if ( ! defined( 'ICTUWP_VIMEO_EMBED_VERSION' ) ) {
+	define( 'ICTUWP_VIMEO_EMBED_VERSION', '1.0.0.g' );
 }
 
 // load translations
@@ -147,19 +153,20 @@ function ictuwp_vimeoembed_append_vimeo_scripts() {
 
 	global $post;
 
+	$infooter = true;
+
 	if ( ! is_admin() && $post ) {
 
-		$vimeourl = get_field( 'vimeo_url', $post->ID );
+		$vimeo_embed = get_field( 'vimeo_url', $post->ID );
 
-		if ( $vimeourl ):
+		if ( $vimeo_embed ):
 			// if a Vimeo webinar URL is added, append the embed scripts
-			wp_enqueue_script( 'vimeo-scripts', 'https://player.vimeo.com/api/player.js', '', '', true );
+			wp_enqueue_script( 'vimeo-scripts', 'https://player.vimeo.com/api/player.js', '', ICTUWP_VIMEO_EMBED_VERSION, $infooter );
 
 		endif;
 
-		wp_register_style( 'pagetemplate-webinar', plugin_dir_url( __FILE__ ) . 'public/css/webinar-pagetype.css', array(), '' );
+		wp_register_style( 'pagetemplate-webinar', plugin_dir_url( __FILE__ ) . 'public/css/webinar-pagetype.css', array(), ICTUWP_VIMEO_EMBED_VERSION );
 		wp_enqueue_style( 'pagetemplate-webinar' );
-
 
 
 	}
@@ -179,42 +186,83 @@ function ictuwp_vimeoembed_do_embed() {
 	global $post;
 
 	// get the ACF field value
-	$vimeourl = get_field( 'vimeo_url', $post->ID );
+	$vimeo_embed = get_field( 'vimeo_embed', $post->ID );
+	$chat_embed  = get_field( 'chat_embed', $post->ID );
 
-	if ( $vimeourl ):
-
+	if ( $vimeo_embed ):
 		// for example:https://vimeo.com/live/611413510/embed
-		$vimeo_id     = 0;
-		$vimeo_width  = 600;
-		$vimeo_height = 600;
-		$attrs = array();
+		$vimeo_id       = 0;
+		$webinarpadding = '56.25%';
 
-		$array_vimeo = explode( '/', $vimeourl );
-		foreach ( $array_vimeo as $item ) {
-			if ( is_numeric( $item ) ) {
-				// retrieve the ID, this should be a number
-				$vimeo_id = $item;
+//		echo '<pre>';
+//		var_dump( $array_vimeo );
+//		echo '</pre>';
+
+		$videoparameters = array(
+			'badge'     => '0',
+			'autopause' => '0',
+			'player_id' => '0'
+		);
+
+		// de embed codes zijn leuk, maar omdat we niet alle gebruikersinput vertrouwen gaan we de code opschonen en
+		// alleen de video ID / chat ID ophalen. De rest zetten we er zelf bij
+		$stripby     = 'video/';
+		$destring    = esc_html( strip_tags( $vimeo_embed, '<iframe>' ) );
+		$array_vimeo = explode( $stripby, $destring );
+		$vimeo_id    = $array_vimeo[1];
+		if ( strpos( $vimeo_id, '?' ) ) {
+			$array_vimeo_id = explode( '?', $vimeo_id );
+			$vimeo_id       = $array_vimeo_id[0];
+			if ( ! is_numeric( $vimeo_id ) ) {
+				$vimeo_id = 0;
+			}
+		}
+		if ( $chat_embed ) {
+
+			$stripby     = '/';
+			$destring    = esc_html( strip_tags( $chat_embed, '<iframe>' ) );
+			$array_vimeo = explode( $stripby, $destring );
+			$counter     = 0;
+			$chatid      = 0;
+
+			foreach ( $array_vimeo as $dinges ) {
+				$counter ++;
+//				echo $dinges . '<br>';
+				if ( 'live-chat' === $dinges ) {
+					$chatid = $array_vimeo[ $counter ];
+				}
+			}
+
+			if ( $chatid ) {
+				$webinarpadding = '45%';
+				$chat_embed     = 'https://vimeo.com/live-chat/' . $chatid;
 			}
 		}
 
-//		$extra = '?h=a3cc83fe36&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479';
-		$extra = '?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479';
 
-		$embedurl = 'https://player.vimeo.com/video/' . $vimeo_id . $extra;
-/*
- * <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/613626035?h=a3cc83fe36&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="test van paul"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
- */
+		$embedurl = 'https://player.vimeo.com/video/' . $vimeo_id . '?' . http_build_query( $videoparameters );
 
 		if ( $vimeo_id ) {
-			echo '<p><a href="' . $vimeourl . '">' . _x( 'Link naar vimeo', 'gebruikercentraal' ) . '</a></p>';
-			echo '<div style="padding:56.25% 0 0 0;position:relative;border:0.2rem solid #6E9CA5">';
+			echo '<p><a href="https://vimeo.com/' . $vimeo_id . '/">' . _x( 'Link naar vimeo', 'gebruikercentraal' ) . '</a></p>';
+			echo '<div id="vimeoembed">';
+
+			if ( $chat_embed ) {
+				echo '<div id="vimeo_chat">';
+				echo '<iframe src="' . $chat_embed . '" width="100%" height="100%" frameborder="0"></iframe>';
+				echo '</div>'; // #vimeo_chat
+			}
+
+			echo '<div style="padding-top:' . $webinarpadding . ';position:relative;" id="vimeo_webinar">';
 			echo '<iframe src="' . $embedurl . '" ';
 			echo 'frameborder="0" ';
 			echo 'allow="autoplay; fullscreen; picture-in-picture" ';
 			echo 'style="position:absolute;top:0;left:0;width:100%;height:100%;" ';
 			echo 'webkitallowfullscreen mozallowfullscreen allowfullscreen';
 			echo '></iframe>';
-			echo '</div>';
+			echo '</div>'; // #vimeo_webinar
+
+
+			echo '</div>'; // #vimeoembed
 		} else {
 
 		}

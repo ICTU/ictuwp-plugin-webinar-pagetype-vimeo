@@ -1,13 +1,13 @@
 [
     {
         "key": "group_6141dde284257",
-        "title": "Webinar instellingen",
+        "title": "01 - instellingen voor Vimeo-webinar",
         "fields": [
             {
                 "key": "field_6141ddff52807",
-                "label": "Vimeo webinar URL",
-                "name": "vimeo_url",
-                "type": "url",
+                "label": "Vimeo embed code",
+                "name": "vimeo_embed",
+                "type": "textarea",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -17,10 +17,39 @@
                     "id": ""
                 },
                 "default_value": "",
-                "placeholder": ""
+                "new_lines": "",
+                "maxlength": "",
+                "placeholder": "",
+                "rows": ""
+            },
+            {
+                "key": "field_614df2d997654",
+                "label": "Chat embed code",
+                "name": "chat_embed",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "maxlength": "",
+                "rows": "",
+                "new_lines": ""
             }
         ],
         "location": [
+            [
+                {
+                    "param": "page_template",
+                    "operator": "==",
+                    "value": "page_webinar_genesis.php"
+                }
+            ],
             [
                 {
                     "param": "page_template",
