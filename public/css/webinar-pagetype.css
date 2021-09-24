@@ -1,0 +1,13 @@
+
+.page-template-page_webinar .entry-content {
+  max-width: 1800px
+}
+
+.page-template-page_webinar .entry-header, .entry-content > ol,
+.page-template-page_webinar .entry-header, .entry-content > ul,
+.page-template-page_webinar .entry-header, .entry-content > p {
+  max-width: 770px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
