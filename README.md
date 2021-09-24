@@ -41,7 +41,7 @@ Mail: [webmaster@gebruikercentraal.nl](mailto:webmaster@gebruikercentraal.nl)
 
 ## Versie-log
 
-* 1.0.0 - eerste versie met velden voor chat-embed en webinar-embed
+* 1.0.0 - Eerste versie met velden voor chat-embed en webinar-embed
 
 ## To do
 
