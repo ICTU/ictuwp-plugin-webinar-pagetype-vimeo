@@ -55,8 +55,7 @@ add_filter( 'template_include', 'ictuwp_vimeoembed_use_page_template' );
  */
 function ictuwp_vimeoembed_add_page_template( $post_templates ) {
 
-	$post_templates[ ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS ] = _x( 'Webinar embed (gc theme 2016)', "naam template", 'ictuwp-plugin-webinar' );
-	$post_templates[ ICTUWP_VIMEO_EMBED_TEMPLATE ]         = _x( 'Webinar embed (gc theme 2020)', "naam template", 'ictuwp-plugin-webinar' );
+	$post_templates[ ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS ] = _x( 'Webinar embed', "naam template", 'ictuwp-plugin-webinar' );
 
 	return $post_templates;
 
