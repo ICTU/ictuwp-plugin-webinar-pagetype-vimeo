@@ -108,44 +108,6 @@ function ictuwp_vimeoembed_use_page_template( $page_template ) {
 //========================================================================================================
 
 /**
- * Have the ACF (advanced custom fields) plugin read the settings from this plugin's acf-json folder
- *
- * @since    1.0.0
- */
-function ictuwp_vimeoembed_add_acf_folder( $paths ) {
-
-	// append path
-	$paths[] = plugin_dir_path( __FILE__ ) . 'acf-json';
-
-	// return
-	return $paths;
-
-}
-
-add_filter( 'acf/settings/load_json', 'ictuwp_vimeoembed_add_acf_folder' );
-
-//========================================================================================================
-
-/**
- * Have the ACF (advanced custom fields) plugin save settings to a json file in this plugin's acf-json folder
- *
- * @since    1.0.0
- */
-function ictuwp_vimeoembed_acf_json_save_point( $path ) {
-
-	// update path
-	$path = plugin_dir_path( __FILE__ ) . 'acf-json';
-
-	// return
-	return $path;
-
-}
-
-add_filter( 'acf/settings/save_json', 'ictuwp_vimeoembed_acf_json_save_point' );
-
-//========================================================================================================
-
-/**
  * Add JavaScript and stylesheets
  *
  * @global integer $post Post ID.
