@@ -6,7 +6,7 @@
  * Plugin Name:       ICTU / Gebruiker Centraal / Page template voor Vimeo webinars
  * Plugin URI:        https://github.com/ICTU/ICTU-Gebruiker-Centraal-Beelden-en-Brieven-CPTs-and-taxonomies
  * Description:       Plugin voor www.gebruikercentraal.nl e.a: embedden van een vimeowebinar
- * Version:           1.0.0
+ * Version:           1.1.1
  * Version descr:     Eerste versie met velden voor chat-embed en webinar-embed
  * Author:            Paul van Buuren
  * Author URI:        https://wbvb.nl/
@@ -33,7 +33,7 @@ if ( ! defined( 'ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS' ) ) {
 	define( 'ICTUWP_VIMEO_EMBED_TEMPLATE_GENESIS', 'page_webinar_genesis.php' );
 }
 if ( ! defined( 'ICTUWP_VIMEO_EMBED_VERSION' ) ) {
-	define( 'ICTUWP_VIMEO_EMBED_VERSION', '1.0.0' );
+	define( 'ICTUWP_VIMEO_EMBED_VERSION', '1.1.1' );
 }
 
 // load translations
