@@ -37,12 +37,7 @@ dat je organiseert. Als je de pagina opslaat en bekijkt, zie je dat het webinar 
 Gemaakt door Paul van Buuren ([paul@wbvb.nl](mailto:paul@wbvb.nl)
 Mail: [webmaster@gebruikercentraal.nl](mailto:webmaster@gebruikercentraal.nl)
 
-## Versie: 1.1.1
-
-## Versie-log
-
-* 1.1.1 - Removed storage of ACF definitions in this plugin
-* 1.0.0 - Eerste versie met velden voor chat-embed en webinar-embed
+## Versie: 1.1.2
 
 ## To do
 
